@@ -22,22 +22,33 @@ export default function Admin() {
   useEffect(() => {
     checkSession();
 
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setSession(session);
-        if (session) {
-          fetchPhotos();
-        }
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+
+      if (session) {
+        fetchPhotos();
+      } else {
+        setPhotos([]);
       }
-    );
+    });
 
     return () => {
-      listener.subscription.unsubscribe();
+      subscription.unsubscribe();
     };
   }, []);
 
   async function checkSession() {
-    const { data } = await supabase.auth.getSession();
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error) {
+      await supabase.auth.signOut();
+      setSession(null);
+      setPhotos([]);
+      return;
+    }
+
     setSession(data.session);
 
     if (data.session) {
@@ -67,6 +78,7 @@ export default function Admin() {
   async function handleLogout() {
     await supabase.auth.signOut();
     setSession(null);
+    setPhotos([]);
     setMessage("Logged out.");
   }
 
@@ -81,7 +93,7 @@ export default function Admin() {
       return;
     }
 
-    setPhotos(data);
+    setPhotos(data || []);
   }
 
   async function handleUpload(e) {
