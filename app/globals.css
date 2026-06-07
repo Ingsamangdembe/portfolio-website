@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -14,33 +18,85 @@ a {
   text-decoration: none;
 }
 
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
 /* Navbar */
 .navbar {
   width: 100%;
-  padding: 24px 8%;
+  padding: 34px 8%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #eeeeee;
+  background: #ffffff;
+  position: relative;
+  z-index: 1000;
 }
 
 .logo {
-  font-size: 22px;
-  font-weight: bold;
-  letter-spacing: 1px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
 }
 
-nav {
+/* Hamburger */
+.menu-button {
+  width: 36px;
+  height: 28px;
+  border: none;
+  background: transparent;
   display: flex;
-  gap: 24px;
-  font-size: 15px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  padding: 0;
+  cursor: pointer;
+  z-index: 1002;
 }
 
-nav a:hover {
+.menu-button span {
+  width: 36px;
+  height: 1px;
+  background: #111111;
+  display: block;
+  transition: 0.3s ease;
+}
+
+.menu-button.open span:first-child {
+  transform: rotate(45deg) translate(3px, 3px);
+}
+
+.menu-button.open span:last-child {
+  transform: rotate(-45deg) translate(3px, -3px);
+}
+
+/* Fullscreen menu */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  font-size: 24px;
+}
+
+.mobile-menu a:hover {
   text-decoration: underline;
 }
 
-/* Page layout */
+/* Page */
 .page {
   min-height: 75vh;
   padding: 80px 8%;
@@ -100,8 +156,9 @@ h2 {
   margin-top: 40px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-  gap: 40px;
+  gap: 44px;
 }
+
 .photo-card {
   border: none;
   padding: 0;
@@ -127,12 +184,13 @@ h2 {
   line-height: 1.5;
 }
 
-/* Contact */
-.contact-box {
+/* About / Contact simple placeholder pages */
+.contact-box,
+.about-box {
   margin-top: 32px;
+  max-width: 600px;
   padding: 24px;
   border: 1px solid #eeeeee;
-  max-width: 500px;
 }
 
 /* Admin */
@@ -174,7 +232,6 @@ textarea {
   padding: 12px;
   border: 1px solid #cccccc;
   font-size: 15px;
-  font-family: inherit;
 }
 
 textarea {
@@ -182,7 +239,6 @@ textarea {
   resize: vertical;
 }
 
-/* Admin buttons */
 .edit-button,
 .cancel-button,
 .logout-button {
@@ -224,41 +280,24 @@ textarea {
 /* Mobile */
 @media (max-width: 700px) {
   .navbar {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 16px;
+    padding: 28px 24px;
   }
 
-  nav {
-    flex-wrap: wrap;
-    gap: 14px;
-  }
-
-  .page {
-    padding: 50px 6%;
-  }
-
-  h1 {
-    font-size: 42px;
-  }
-
-  .hero-buttons {
-    flex-direction: column;
-    width: fit-content;
-  }
-
-  .admin-header {
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 700px) {
   .page {
     padding: 50px 24px;
   }
 
   h1 {
     font-size: 48px;
+  }
+
+  .intro {
+    font-size: 18px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: fit-content;
   }
 
   .photo-grid {
@@ -274,5 +313,13 @@ textarea {
 
   .photo-card {
     width: 100%;
+  }
+
+  .admin-header {
+    flex-direction: column;
+  }
+
+  .admin-box {
+    padding: 18px;
   }
 }
