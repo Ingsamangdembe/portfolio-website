@@ -251,3 +251,28 @@ textarea {
     flex-direction: column;
   }
 }
+
+@media (max-width: 700px) {
+  .page {
+    padding: 50px 24px;
+  }
+
+  h1 {
+    font-size: 48px;
+  }
+
+  .photo-grid {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .gallery-img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  .photo-card {
+    width: 100%;
+  }
+}
