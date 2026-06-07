@@ -13,6 +13,7 @@ export default function Gallery() {
       const { data, error } = await supabase
         .from("photos")
         .select("*")
+        .order("sort_order", { ascending: true })
         .order("created_at", { ascending: false });
 
       if (error) {

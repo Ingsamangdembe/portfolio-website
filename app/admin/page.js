@@ -86,6 +86,7 @@ export default function Admin() {
     const { data, error } = await supabase
       .from("photos")
       .select("*")
+      .order("sort_order", { ascending: true })
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -94,6 +95,20 @@ export default function Admin() {
     }
 
     setPhotos(data || []);
+  }
+
+  async function getNextSortOrder() {
+    const { data, error } = await supabase
+      .from("photos")
+      .select("sort_order")
+      .order("sort_order", { ascending: false })
+      .limit(1);
+
+    if (error || !data || data.length === 0) {
+      return 1;
+    }
+
+    return (data[0].sort_order || 0) + 1;
   }
 
   async function handleUpload(e) {
@@ -122,12 +137,14 @@ export default function Admin() {
       .getPublicUrl(fileName);
 
     const imageUrl = data.publicUrl;
+    const nextSortOrder = await getNextSortOrder();
 
     const { error: dbError } = await supabase.from("photos").insert([
       {
         title: title,
         caption: caption,
         image_url: imageUrl,
+        sort_order: nextSortOrder,
       },
     ]);
 
@@ -203,6 +220,42 @@ export default function Admin() {
     setEditTitle("");
     setEditCaption("");
 
+    await fetchPhotos();
+  }
+
+  async function movePhoto(index, direction) {
+    const currentPhoto = photos[index];
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    const targetPhoto = photos[targetIndex];
+
+    if (!currentPhoto || !targetPhoto) return;
+
+    setMessage("Updating order...");
+
+    const currentOrder = currentPhoto.sort_order || 0;
+    const targetOrder = targetPhoto.sort_order || 0;
+
+    const { error: errorOne } = await supabase
+      .from("photos")
+      .update({ sort_order: targetOrder })
+      .eq("id", currentPhoto.id);
+
+    if (errorOne) {
+      setMessage("Move failed: " + errorOne.message);
+      return;
+    }
+
+    const { error: errorTwo } = await supabase
+      .from("photos")
+      .update({ sort_order: currentOrder })
+      .eq("id", targetPhoto.id);
+
+    if (errorTwo) {
+      setMessage("Move failed: " + errorTwo.message);
+      return;
+    }
+
+    setMessage("Order updated.");
     await fetchPhotos();
   }
 
@@ -290,7 +343,7 @@ export default function Admin() {
         {photos.length === 0 && <p>No uploaded photos yet.</p>}
 
         <div className="photo-grid">
-          {photos.map((photo) => (
+          {photos.map((photo, index) => (
             <div className="photo-card" key={photo.id}>
               <img
                 src={photo.image_url}
@@ -333,8 +386,28 @@ export default function Admin() {
                 </div>
               ) : (
                 <>
-                  <h3>{photo.title || "Untitled"}</h3>
-                  <p>{photo.caption || ""}</p>
+                  {photo.title && <h3>{photo.title}</h3>}
+                  {photo.caption && <p>{photo.caption}</p>}
+
+                  <div className="admin-actions">
+                    <button
+                      className="edit-button"
+                      type="button"
+                      onClick={() => movePhoto(index, "up")}
+                      disabled={index === 0}
+                    >
+                      ↑
+                    </button>
+
+                    <button
+                      className="edit-button"
+                      type="button"
+                      onClick={() => movePhoto(index, "down")}
+                      disabled={index === photos.length - 1}
+                    >
+                      ↓
+                    </button>
+                  </div>
 
                   <div className="admin-actions">
                     <button

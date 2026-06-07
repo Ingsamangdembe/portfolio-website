@@ -397,3 +397,57 @@ textarea {
     max-height: 70vh;
   }
 }
+
+button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.admin-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-actions button {
+  font-size: 12px;
+  padding: 8px 10px;
+}
+
+.edit-button,
+.cancel-button,
+.logout-button {
+  border: 1px solid #111111;
+  background: #ffffff;
+  color: #111111;
+}
+
+.delete-button {
+  border: 1px solid #cc0000;
+  background: #ffffff;
+  color: #cc0000;
+}
+
+button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.admin-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-actions button {
+  font-size: 12px;
+  padding: 8px 10px;
+  min-width: 36px;
+}
+
+button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
