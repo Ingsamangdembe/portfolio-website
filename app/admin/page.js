@@ -338,96 +338,101 @@ export default function Admin() {
       </form>
 
       <section className="admin-gallery">
-        <h2>Uploaded Photos</h2>
+        <h2>Manage Photos</h2>
 
         {photos.length === 0 && <p>No uploaded photos yet.</p>}
 
-        <div className="photo-grid">
+        <div className="admin-photo-list">
           {photos.map((photo, index) => (
-            <div className="photo-card" key={photo.id}>
+            <div className="admin-photo-item" key={photo.id}>
               <img
                 src={photo.image_url}
                 alt={photo.title || "Portfolio photo"}
-                className="gallery-img"
+                className="admin-thumb"
               />
 
-              {editingId === photo.id ? (
-                <div className="edit-box">
-                  <label>Title</label>
-                  <input
-                    type="text"
-                    value={editTitle}
-                    onChange={(e) => setEditTitle(e.target.value)}
-                  />
+              <div className="admin-photo-info">
+                {editingId === photo.id ? (
+                  <div className="edit-box">
+                    <label>Title</label>
+                    <input
+                      type="text"
+                      value={editTitle}
+                      onChange={(e) => setEditTitle(e.target.value)}
+                    />
 
-                  <label>Caption</label>
-                  <textarea
-                    value={editCaption}
-                    onChange={(e) => setEditCaption(e.target.value)}
-                  ></textarea>
+                    <label>Caption</label>
+                    <textarea
+                      value={editCaption}
+                      onChange={(e) => setEditCaption(e.target.value)}
+                    ></textarea>
 
-                  <div className="admin-actions">
-                    <button
-                      className="button"
-                      type="button"
-                      onClick={() => saveEdit(photo.id)}
-                    >
-                      Save
-                    </button>
+                    <div className="admin-actions">
+                      <button
+                        className="button"
+                        type="button"
+                        onClick={() => saveEdit(photo.id)}
+                      >
+                        Save
+                      </button>
 
-                    <button
-                      className="cancel-button"
-                      type="button"
-                      onClick={cancelEdit}
-                    >
-                      Cancel
-                    </button>
+                      <button
+                        className="cancel-button"
+                        type="button"
+                        onClick={cancelEdit}
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <>
-                  {photo.title && <h3>{photo.title}</h3>}
-                  {photo.caption && <p>{photo.caption}</p>}
+                ) : (
+                  <>
+                    <div className="admin-photo-text">
+                      {photo.title && <h3>{photo.title}</h3>}
+                      {photo.caption && <p>{photo.caption}</p>}
+                      {!photo.title && !photo.caption && (
+                        <p className="muted-text">No title or caption</p>
+                      )}
+                    </div>
 
-                  <div className="admin-actions">
-                    <button
-                      className="edit-button"
-                      type="button"
-                      onClick={() => movePhoto(index, "up")}
-                      disabled={index === 0}
-                    >
-                      ↑
-                    </button>
+                    <div className="admin-actions">
+                      <button
+                        className="edit-button"
+                        type="button"
+                        onClick={() => movePhoto(index, "up")}
+                        disabled={index === 0}
+                      >
+                        ↑
+                      </button>
 
-                    <button
-                      className="edit-button"
-                      type="button"
-                      onClick={() => movePhoto(index, "down")}
-                      disabled={index === photos.length - 1}
-                    >
-                      ↓
-                    </button>
-                  </div>
+                      <button
+                        className="edit-button"
+                        type="button"
+                        onClick={() => movePhoto(index, "down")}
+                        disabled={index === photos.length - 1}
+                      >
+                        ↓
+                      </button>
 
-                  <div className="admin-actions">
-                    <button
-                      className="edit-button"
-                      type="button"
-                      onClick={() => startEdit(photo)}
-                    >
-                      Edit
-                    </button>
+                      <button
+                        className="edit-button"
+                        type="button"
+                        onClick={() => startEdit(photo)}
+                      >
+                        Edit
+                      </button>
 
-                    <button
-                      className="delete-button"
-                      type="button"
-                      onClick={() => handleDelete(photo)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </>
-              )}
+                      <button
+                        className="delete-button"
+                        type="button"
+                        onClick={() => handleDelete(photo)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           ))}
         </div>

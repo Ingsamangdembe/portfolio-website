@@ -409,3 +409,67 @@ button:disabled {
     max-height: 70vh;
   }
 }
+
+.admin-photo-list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.admin-photo-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 18px;
+  align-items: start;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.admin-thumb {
+  width: 140px;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  display: block;
+}
+
+.admin-photo-info {
+  min-width: 0;
+}
+
+.admin-photo-text h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.admin-photo-text p {
+  margin: 0;
+  color: #555555;
+  line-height: 1.5;
+}
+
+.muted-text {
+  color: #888888;
+  font-size: 14px;
+}
+
+@media (max-width: 700px) {
+  .admin-photo-item {
+    grid-template-columns: 110px 1fr;
+    gap: 14px;
+  }
+
+  .admin-thumb {
+    width: 110px;
+  }
+
+  .admin-actions {
+    gap: 6px;
+  }
+
+  .admin-actions button {
+    font-size: 12px;
+    padding: 7px 9px;
+  }
+}
