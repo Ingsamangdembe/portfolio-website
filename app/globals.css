@@ -184,7 +184,67 @@ h2 {
   line-height: 1.5;
 }
 
-/* About / Contact simple placeholder pages */
+/* Clickable image */
+.image-button {
+  width: 100%;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  display: block;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.96);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 28px;
+  right: 34px;
+  border: none;
+  background: transparent;
+  font-size: 42px;
+  line-height: 1;
+  cursor: pointer;
+  color: #111111;
+}
+
+.lightbox-content {
+  max-width: 1100px;
+  width: 100%;
+}
+
+.lightbox-img {
+  width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  display: block;
+}
+
+.lightbox-text {
+  margin-top: 16px;
+}
+
+.lightbox-text h2 {
+  font-size: 18px;
+  margin: 0 0 6px;
+}
+
+.lightbox-text p {
+  margin: 0;
+  color: #555555;
+}
+
+/* About / Contact */
 .contact-box,
 .about-box {
   margin-top: 32px;
@@ -216,9 +276,16 @@ h2 {
 }
 
 .admin-actions {
-  margin-top: 14px;
+  margin-top: 10px;
   display: flex;
-  gap: 10px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-actions button {
+  font-size: 12px;
+  padding: 8px 10px;
+  min-width: 36px;
 }
 
 .edit-box {
@@ -267,6 +334,11 @@ textarea {
 .delete-button:hover {
   background: #cc0000;
   color: #ffffff;
+}
+
+button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 /* Footer */
@@ -322,67 +394,7 @@ textarea {
   .admin-box {
     padding: 18px;
   }
-}
 
-.image-button {
-  width: 100%;
-  border: none;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-  display: block;
-}
-
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.96);
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
-}
-
-.lightbox-close {
-  position: fixed;
-  top: 28px;
-  right: 34px;
-  border: none;
-  background: transparent;
-  font-size: 42px;
-  line-height: 1;
-  cursor: pointer;
-  color: #111111;
-}
-
-.lightbox-content {
-  max-width: 1100px;
-  width: 100%;
-}
-
-.lightbox-img {
-  width: 100%;
-  max-height: 78vh;
-  object-fit: contain;
-  display: block;
-}
-
-.lightbox-text {
-  margin-top: 16px;
-}
-
-.lightbox-text h2 {
-  font-size: 18px;
-  margin: 0 0 6px;
-}
-
-.lightbox-text p {
-  margin: 0;
-  color: #555555;
-}
-
-@media (max-width: 700px) {
   .lightbox {
     padding: 24px;
   }
@@ -396,58 +408,4 @@ textarea {
   .lightbox-img {
     max-height: 70vh;
   }
-}
-
-button:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-.admin-actions {
-  margin-top: 12px;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.admin-actions button {
-  font-size: 12px;
-  padding: 8px 10px;
-}
-
-.edit-button,
-.cancel-button,
-.logout-button {
-  border: 1px solid #111111;
-  background: #ffffff;
-  color: #111111;
-}
-
-.delete-button {
-  border: 1px solid #cc0000;
-  background: #ffffff;
-  color: #cc0000;
-}
-
-button:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-.admin-actions {
-  margin-top: 10px;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.admin-actions button {
-  font-size: 12px;
-  padding: 8px 10px;
-  min-width: 36px;
-}
-
-button:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
 }
